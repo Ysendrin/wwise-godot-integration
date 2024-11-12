@@ -1,0 +1,5 @@
+**/*.obj
+**/*.pdb
+**/*.dblite
+addons/Wwise/native/lib/*
+.vscode/*
