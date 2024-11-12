@@ -23,7 +23,7 @@ private:
 	String WWISE_WINDOWS_ADVANCED_SETTINGS_PATH = "wwise/windows_advanced_settings/";
 	String WWISE_MACOS_ADVANCED_SETTINGS_PATH = "wwise/macos_advanced_settings/";
 	String WWISE_IOS_ADVANCED_SETTINGS_PATH = "wwise/ios_advanced_settings/";
-	String WWISE_ANDROID_ADVANCED_SETTINGS_PATH = "wwise/android_advanced_settings/";
+	// String WWISE_ANDROID_ADVANCED_SETTINGS_PATH = "wwise/android_advanced_settings/";
 	String WWISE_LINUX_ADVANCED_SETTINGS_PATH = "wwise/linux_advanced_settings/";
 
 	void add_wwise_settings();

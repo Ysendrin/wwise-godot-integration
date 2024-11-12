@@ -25,6 +25,7 @@
 #include "editor/ak_editor_utils.cpp"
 #include "editor/ak_event_3d_gizmo_plugin.cpp"
 #include "editor/ak_inspector_plugin.cpp"
+#include "editor/wwise_editor_scale.cpp"
 #endif
 
 #if defined(AK_WIN) || defined(AK_MAC_OS_X)
@@ -68,9 +69,11 @@ void register_wwise_types(ModuleInitializationLevel p_level)
 		ClassDB::register_class<AkInspectorEditorProperty>();
 		ClassDB::register_class<AkEvent3DGizmoPlugin>();
 		ClassDB::register_class<AkEditorExportPlugin>();
-		ClassDB::register_class<AkAndroidExportPlugin>();
+		// ClassDB::register_class<AkAndroidExportPlugin>();
 		ClassDB::register_class<AkEditorPlugin>();
+		ClassDB::register_class<WwiseEditorScale>();
 		EditorPlugins::add_by_type<AkEditorPlugin>();
+		EditorPlugins::add_by_type<WwiseEditorScale>();
 #endif
 #endif
 	}

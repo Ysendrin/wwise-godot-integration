@@ -602,23 +602,20 @@ void AkWaapiPicker::_enter_tree()
 			Vector2(picker_data.scene_data.control->get_custom_minimum_size().x,
 					editor_viewport->get_visible_rect().get_size().y * 0.3f));
 
-	Error error =
-			editor_viewport->connect("size_changed", callable_mp(this, &AkWaapiPicker::_on_resized_editor_viewport));
+	Error error = editor_viewport->connect("size_changed", Callable(this, "_on_resized_editor_viewport"));
 	AKASSERT(error == Error::OK);
-	error = editor_viewport->connect(
-			"visibility_changed", callable_mp(this, &AkWaapiPicker::_on_visibility_changed_editor_viewport));
+	error = editor_viewport->connect("visibility_changed", Callable(this, "_on_visibility_changed_editor_viewport"));
 	AKASSERT(error == Error::OK);
 	error = picker_data.scene_data.refresh_project_button->connect(
-			"button_up", callable_mp(this, &AkWaapiPicker::_on_refresh_project_button_up));
+			"button_up", Callable(this, "_on_refresh_project_button_up"));
 	AKASSERT(error == Error::OK);
 	error = picker_data.scene_data.export_soundbanks_button->connect(
-			"button_up", callable_mp(this, &AkWaapiPicker::_on_export_soundbanks_button_up));
+			"button_up", Callable(this, "_on_export_soundbanks_button_up"));
 	AKASSERT(error == Error::OK);
 	error = picker_data.scene_data.generate_ids_button->connect(
-			"button_up", callable_mp(this, &AkWaapiPicker::_on_generate_ids_button_up));
+			"button_up", Callable(this, "_on_generate_ids_button_up"));
 	AKASSERT(error == Error::OK);
-	error = picker_data.scene_data.search_text->connect(
-			"text_changed", callable_mp(this, &AkWaapiPicker::_on_search_text_changed));
+	error = picker_data.scene_data.search_text->connect("text_changed", Callable(this, "_on_search_text_changed"));
 	AKASSERT(error == Error::OK);
 
 	auto port = ProjectSettings::get_singleton()->get_setting("wwise/communication_settings/waapi_port", 8080);
@@ -786,7 +783,7 @@ void AkWaapiPicker::_on_generate_ids_button_up()
 	PackedStringArray filters;
 	filters.append(file_type);
 	file_dialog->set_filters(filters);
-	file_dialog->connect("file_selected", callable_mp(this, &AkWaapiPicker::_on_file_dialog_file_selected));
+	file_dialog->connect("file_selected", Callable(this, "_on_file_dialog_file_selected"));
 
 	EditorInterface* editor_interface = get_editor_interface();
 	Control* base_control = editor_interface->get_base_control();

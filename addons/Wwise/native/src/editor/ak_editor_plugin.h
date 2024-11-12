@@ -1,6 +1,6 @@
 #pragma once
 
-#include "editor/ak_android_export_plugin.h"
+// #include "editor/ak_android_export_plugin.h"
 #include "editor/ak_editor_export_plugin.h"
 #include "editor/ak_event_3d_gizmo_plugin.h"
 #include "editor/ak_inspector_plugin.h"
@@ -18,7 +18,7 @@ protected:
 private:
 	Ref<AkEvent3DGizmoPlugin> gizmo_plugin;
 	Ref<AkEditorExportPlugin> export_plugin;
-	Ref<AkAndroidExportPlugin> android_export_plugin;
+	// Ref<AkAndroidExportPlugin> android_export_plugin;
 	Ref<AkInspectorEditorInspectorPlugin> inspector_plugin;
 
 public:

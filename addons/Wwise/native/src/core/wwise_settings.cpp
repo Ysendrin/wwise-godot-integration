@@ -108,10 +108,10 @@ void WwiseSettings::add_wwise_settings()
 	add_setting(WWISE_IOS_ADVANCED_SETTINGS_PATH + "audio_session_mode", 0, Variant::Type::INT, PROPERTY_HINT_ENUM,
 			"Default, Voice Chat, Game Chat, Video Recording, Measurement, Movie Playback, Video Chat");
 
-	// android advanced settings
-	add_setting(WWISE_ANDROID_ADVANCED_SETTINGS_PATH + "audio_API", 3, Variant::Type::INT, PROPERTY_HINT_FLAGS,
-			"AAudio, OPENSL_ES");
-	add_setting(WWISE_ANDROID_ADVANCED_SETTINGS_PATH + "round_frame_size_to_hw_size", true, Variant::Type::BOOL);
+	// // android advanced settings
+	// add_setting(WWISE_ANDROID_ADVANCED_SETTINGS_PATH + "audio_API", 3, Variant::Type::INT, PROPERTY_HINT_FLAGS,
+	// 		"AAudio, OPENSL_ES");
+	// add_setting(WWISE_ANDROID_ADVANCED_SETTINGS_PATH + "round_frame_size_to_hw_size", true, Variant::Type::BOOL);
 
 	// linux advanced settings
 	add_setting(WWISE_LINUX_ADVANCED_SETTINGS_PATH + "audio_API", 3, Variant::Type::INT, PROPERTY_HINT_FLAGS,

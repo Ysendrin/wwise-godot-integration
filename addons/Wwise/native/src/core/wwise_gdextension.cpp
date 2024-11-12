@@ -1,8 +1,8 @@
 #include "wwise_gdextension.h"
 
-#if defined(AK_ANDROID)
-#include "platform/android/jni_support.cpp"
-#endif
+// #if defined(AK_ANDROID)
+// #include "platform/android/jni_support.cpp"
+// #endif
 
 #include <AK/Plugin/AllPluginsFactories.h>
 
@@ -203,8 +203,8 @@ void Wwise::init()
 	String banks_platform_suffix = "/Mac";
 #elif defined(AK_IOS)
 	String banks_platform_suffix = "/iOS";
-#elif defined(AK_ANDROID)
-	String banks_platform_suffix = "/Android";
+// #elif defined(AK_ANDROID)
+// 	String banks_platform_suffix = "/Android";
 #elif defined(AK_LINUX)
 	String banks_platform_suffix = "/Linux";
 #else
@@ -1790,18 +1790,18 @@ bool Wwise::initialize_wwise_systems()
 
 	platform_init_settings.audioSession.eMode = static_cast<AkAudioSessionMode>(audio_session_mode_enum);
 
-#elif defined(AK_ANDROID)
+	// #elif defined(AK_ANDROID)
 
-	platform_init_settings.eAudioAPI = static_cast<AkAudioAPIAndroid>(
-			static_cast<unsigned int>(get_platform_project_setting("wwise/android_advanced_settings/audio_API")));
+	// 	platform_init_settings.eAudioAPI = static_cast<AkAudioAPIAndroid>(
+	// 			static_cast<unsigned int>(get_platform_project_setting("wwise/android_advanced_settings/audio_API")));
 
-	platform_init_settings.bRoundFrameSizeToHWSize = static_cast<bool>(
-			get_platform_project_setting("wwise/android_advanced_settings/round_frame_size_to_hw_size"));
+	// 	platform_init_settings.bRoundFrameSizeToHWSize = static_cast<bool>(
+	// 			get_platform_project_setting("wwise/android_advanced_settings/round_frame_size_to_hw_size"));
 
-	platform_init_settings.pJavaVM = JNISupport::getJavaVM();
-	platform_init_settings.jActivity = JNISupport::getActivity();
+	// 	platform_init_settings.pJavaVM = JNISupport::getJavaVM();
+	// 	platform_init_settings.jActivity = JNISupport::getActivity();
 
-	platform_init_settings.bEnableLowLatency = true;
+	// 	platform_init_settings.bEnableLowLatency = true;
 
 #elif defined(AK_LINUX)
 

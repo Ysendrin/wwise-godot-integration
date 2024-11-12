@@ -123,10 +123,10 @@ void AkInspectorTree::initialize(const AkEditorUtils::AkType item_type, const Di
 	user_data = user_data_;
 
 	window = Object::cast_to<AkInspectorEditor>(get_parent()->get_parent());
-	window->connect("size_changed", callable_mp(this, &AkInspectorTree::_on_size_changed));
+	window->connect("size_changed", Callable(this, "_on_size_changed"));
 
 	search_text = window->search_text;
-	search_text->connect("text_changed", callable_mp(this, &AkInspectorTree::_on_text_changed));
+	search_text->connect("text_changed", Callable(this, "_on_text_changed"));
 
 	populate_browser("");
 }
@@ -201,8 +201,7 @@ void AkInspectorEditor::initialize()
 	root_vbox = memnew(VBoxContainer);
 	root_vbox->set_name("ParentVBoxContainer");
 
-	EditorInterface* editor_interface = EditorInterface::get_singleton();
-	double editor_scale = editor_interface->get_editor_scale();
+	double editor_scale = WwiseEditorScale::get_singleton()->get_editor_scale();
 	root_vbox->set_size(Size2(400, 600) * editor_scale);
 
 	root_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
@@ -249,8 +248,8 @@ void AkInspectorEditorProperty::init(const AkEditorUtils::AkType type, const Dic
 	window = memnew(AkInspectorEditor);
 	window->initialize();
 	add_child(property_control);
-	window->connect("close_requested", callable_mp(this, &AkInspectorEditorProperty::reset));
-	window->connect("confirmed", callable_mp(this, &AkInspectorEditorProperty::reset));
+	window->connect("close_requested", Callable(this, "reset"));
+	window->connect("confirmed", Callable(this, "reset"));
 
 	AkInspectorTree* tree = window->tree;
 	tree->initialize(ak_type, user_data);
@@ -260,8 +259,8 @@ void AkInspectorEditorProperty::init(const AkEditorUtils::AkType type, const Dic
 	tree->search_text->set("placeholder_text", info.placeholder);
 	icon = AkEditorUtils::get_singleton()->get_editor_icon(ak_type);
 
-	tree->connect("item_selected", callable_mp(this, &AkInspectorEditorProperty::_on_item_selected));
-	property_control->connect("pressed", callable_mp(this, &AkInspectorEditorProperty::_on_button_pressed));
+	tree->connect("item_selected", Callable(this, "_on_item_selected"));
+	property_control->connect("pressed", Callable(this, "_on_button_pressed"));
 }
 
 void AkInspectorEditorProperty::open_popup()
@@ -269,8 +268,7 @@ void AkInspectorEditorProperty::open_popup()
 	add_child(window);
 	window->tree->populate_browser("");
 
-	EditorInterface* editor_interface = EditorInterface::get_singleton();
-	double editor_scale = editor_interface->get_editor_scale();
+	double editor_scale = WwiseEditorScale::get_singleton()->get_editor_scale();
 
 	Point2i popup_position{};
 	popup_position.x = get_global_mouse_position().x - (550.0f * editor_scale);

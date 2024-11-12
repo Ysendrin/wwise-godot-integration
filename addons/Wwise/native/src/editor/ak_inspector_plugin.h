@@ -1,6 +1,7 @@
 #pragma once
 
 #include "editor/ak_editor_utils.h"
+#include "editor/wwise_editor_scale.h"
 #include <godot_cpp/classes/accept_dialog.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_inspector_plugin.hpp>
@@ -46,7 +47,7 @@ class AkInspectorEditor : public AcceptDialog
 	GDCLASS(AkInspectorEditor, AcceptDialog);
 
 protected:
-	static void _bind_methods(){};
+	static void _bind_methods() {};
 
 public:
 	VBoxContainer* root_vbox{};
@@ -122,7 +123,7 @@ class AkInspectorEditorInspectorPlugin : public EditorInspectorPlugin
 	GDCLASS(AkInspectorEditorInspectorPlugin, EditorInspectorPlugin);
 
 protected:
-	static void _bind_methods(){};
+	static void _bind_methods() {};
 
 public:
 	virtual bool _can_handle(Object* object) const override;

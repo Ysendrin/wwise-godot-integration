@@ -4,12 +4,6 @@
 #include "core/utils.h"
 #include "core/wwise_cookie.h"
 #include "core/wwise_io_hook.h"
-#include <godot_cpp/classes/display_server.hpp>
-#include <godot_cpp/classes/object.hpp>
-#include <godot_cpp/classes/project_settings.hpp>
-#include <godot_cpp/classes/ref_counted.hpp>
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
 #include <AK/SoundEngine/Common/AkMemoryMgr.h>
@@ -22,6 +16,12 @@
 #include <AK/Tools/Common/AkAutoLock.h>
 #include <AK/Tools/Common/AkMonitorError.h>
 #include <AK/Tools/Common/AkObject.h>
+#include <godot_cpp/classes/display_server.hpp>
+#include <godot_cpp/classes/object.hpp>
+#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/ref_counted.hpp>
+#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 #ifndef AK_OPTIMIZED
 #include <AK/Comm/AkCommunication.h>
@@ -41,7 +41,7 @@ private:
 	String GODOT_WINDOWS_SETTING_POSTFIX = ".Windows";
 	String GODOT_MAC_OSX_SETTING_POSTFIX = ".OSX";
 	String GODOT_IOS_SETTING_POSTFIX = ".iOS";
-	String GODOT_ANDROID_SETTING_POSTFIX = ".Android";
+	// String GODOT_ANDROID_SETTING_POSTFIX = ".Android";
 	String GODOT_LINUX_SETTING_POSTFIX = ".Linux";
 
 	String WWISE_COMMON_USER_SETTINGS_PATH = "wwise/common_user_settings/";
