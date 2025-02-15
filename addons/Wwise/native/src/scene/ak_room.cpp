@@ -54,10 +54,8 @@ void AkRoom::_enter_tree()
 				keep_registered, geometry_node);
 	}
 
-	if (!is_connected("area_entered", Callable(this, "_on_area_entered")))
-		connect("area_entered", Callable(this, "_on_area_entered"));
-	if (!is_connected("area_exited", Callable(this, "_on_area_exited")))
-		connect("area_exited", Callable(this, "_on_area_exited"));
+	connect("area_entered", Callable(this, "_on_area_entered"));
+	connect("area_exited", Callable(this, "_on_area_exited"));
 }
 
 void AkRoom::_exit_tree()
@@ -70,6 +68,9 @@ void AkRoom::_exit_tree()
 	{
 		soundengine->remove_room(this);
 	}
+
+	disconnect("area_entered", Callable(this, "_on_area_entered"));
+	disconnect("area_exited", Callable(this, "_on_area_exited"));
 }
 
 void AkRoom::_on_area_entered(const Area3D* area)
