@@ -23,6 +23,7 @@ public:
 	AkEnvironment();
 
 	virtual void _enter_tree() override;
+	virtual void _exit_tree() override;
 
 	void _on_area_entered(const Area3D* area);
 	void _on_area_exited(const Area3D* area);

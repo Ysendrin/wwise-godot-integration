@@ -27,6 +27,14 @@ void AkEnvironment::_enter_tree()
 	connect("area_exited", Callable(this, "_on_area_exited"));
 }
 
+void AkEnvironment::_exit_tree()
+{
+	RETURN_IF_EDITOR;
+
+	disconnect("area_entered", Callable(this, "_on_area_entered"));
+	disconnect("area_exited", Callable(this, "_on_area_exited"));
+}
+
 void AkEnvironment::_on_area_entered(const Area3D* area)
 {
 	Node* parent = area->get_parent();
