@@ -1,0 +1,1 @@
+scons platform=windows target=editor wwise_sdk=$env:WWISESDK use_static_cpp=yes
