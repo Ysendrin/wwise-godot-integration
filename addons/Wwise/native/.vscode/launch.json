@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "build editor",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": ".vscode/build_editor.ps1",
+            "cwd": "${cwd}"
+        },
+        {
+            "name": "build debug",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": ".vscode/build_debug.ps1",
+            "cwd": "${cwd}"
+        },
+        {
+            "name": "build all",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": ".vscode/build_all.ps1",
+            "cwd": "${cwd}"
+        }
+    ],
+    "compounds": []
+}
