@@ -40,7 +40,7 @@ public:
 	bool get_dummy() const;
 
 	virtual String get_display_name() { return name; }
-	virtual WwiseObjectType get_object_type() const = 0;
+	virtual WwiseObjectType get_object_type() const { return WwiseObjectType::None; }
 
 #if defined(TOOLS_ENABLED)
 	template <typename T> static Ref<T> create(WwiseObjectType wwise_object_type, String guid);

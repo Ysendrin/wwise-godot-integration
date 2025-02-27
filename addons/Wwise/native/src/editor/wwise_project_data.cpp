@@ -96,7 +96,7 @@ void WwiseProjectData::sort()
 {
 	std::function<void(Array)> sort_and_recurse = [this, &sort_and_recurse](Array root_array)
 	{
-		root_array.sort_custom(callable_mp(this, &WwiseProjectData::sort_custom));
+		root_array.sort_custom(Callable(this, "sort_custom"));
 
 		for (int i = 0; i < root_array.size(); ++i)
 		{

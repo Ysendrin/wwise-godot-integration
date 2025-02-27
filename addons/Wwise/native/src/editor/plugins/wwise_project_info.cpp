@@ -20,10 +20,9 @@ void WwiseProjectInfo::_bind_methods()
 
 void WwiseProjectInfo::_enter_tree()
 {
-	WwiseProjectDatabase::get_singleton()->connect(
-			"ws_soundbank_directory_updated", callable_mp(this, &WwiseProjectInfo::refresh));
-	connect("ws_populate_completed", callable_mp(this, &WwiseProjectInfo::_on_populate_completed), 1);
-	connect("ws_updating_assets_completed", callable_mp(this, &WwiseProjectInfo::_on_updating_assets_completed), 1);
+	WwiseProjectDatabase::get_singleton()->connect("ws_soundbank_directory_updated", Callable(this, "refresh"));
+	connect("ws_populate_completed", Callable(this, "_on_populate_completed"), 1);
+	connect("ws_updating_assets_completed", Callable(this, "_on_updating_assets_completed"), 1);
 
 	const String project_data_path = AkEditorSettings::get_project_data_path();
 
@@ -35,10 +34,9 @@ void WwiseProjectInfo::_enter_tree()
 
 void WwiseProjectInfo::_exit_tree()
 {
-	WwiseProjectDatabase::get_singleton()->disconnect(
-			"ws_soundbank_directory_updated", callable_mp(this, &WwiseProjectInfo::refresh));
-	disconnect("ws_populate_completed", callable_mp(this, &WwiseProjectInfo::_on_populate_completed));
-	disconnect("ws_updating_assets_completed", callable_mp(this, &WwiseProjectInfo::_on_updating_assets_completed));
+	WwiseProjectDatabase::get_singleton()->disconnect("ws_soundbank_directory_updated", Callable(this, "refresh"));
+	disconnect("ws_populate_completed", Callable(this, "_on_populate_completed"));
+	disconnect("ws_updating_assets_completed", Callable(this, "_on_updating_assets_completed"));
 }
 
 void WwiseProjectInfo::_process(double p_delta)

@@ -44,12 +44,12 @@ void WwiseEvent::_notification(int p_what)
 	{
 		case NOTIFICATION_POSTINITIALIZE:
 		{
-			connect("ws_post_resource_init", callable_mp(this, &WwiseEvent::_on_post_resource_init));
+			connect("ws_post_resource_init", Callable(this, "_on_post_resource_init"));
 			break;
 		}
 		case NOTIFICATION_PREDELETE:
 		{
-			disconnect("ws_post_resource_init", callable_mp(this, &WwiseEvent::_on_post_resource_init));
+			disconnect("ws_post_resource_init", Callable(this, "_on_post_resource_init"));
 			unload_auto_bank();
 			break;
 		}
@@ -241,9 +241,6 @@ void WwiseEvent::set_is_auto_bank_loaded(bool p_is_auto_bank_loaded)
 
 bool WwiseEvent::get_is_auto_bank_loaded() const { return is_auto_bank_loaded; }
 
-void WwiseEvent::set_playing_id(AkPlayingID p_playing_id)
-{
-	playing_id = p_playing_id;
-}
+void WwiseEvent::set_playing_id(AkPlayingID p_playing_id) { playing_id = p_playing_id; }
 
 AkPlayingID WwiseEvent::get_playing_id() const { return playing_id; }

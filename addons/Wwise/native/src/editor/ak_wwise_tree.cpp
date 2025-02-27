@@ -16,7 +16,7 @@ AkWwiseTree::AkWwiseTree()
 	set_hide_folding(false);
 	set_hide_root(true);
 	set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	connect("item_activated", callable_mp(this, &AkWwiseTree::_on_item_activated));
+	connect("item_activated", Callable(this, "_on_item_activated"));
 }
 
 bool AkWwiseTree::update_filter(TreeItem* p_parent, bool is_browser)

@@ -40,8 +40,9 @@ public:
 
 		uint32_t load_bank()
 		{
-			if (ref_count == 0 && !banks_to_unload.erase(this))
+			if (ref_count == 0 && banks_to_unload.has(this))
 			{
+				banks_to_unload.erase(this);
 				auto result = AK::SoundEngine::LoadBank(bank_name.utf8().get_data(), bank_id, bank_type);
 				log_load_result(result);
 			}

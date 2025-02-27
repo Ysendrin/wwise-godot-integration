@@ -23,18 +23,17 @@ void WwiseBrowser::_enter_tree()
 
 	Button* refresh_button = memnew(Button);
 	refresh_button->set_text("Refresh Project");
-	refresh_button->connect("button_up", callable_mp(this, &WwiseBrowser::_on_refresh_project_button_up));
+	refresh_button->connect("button_up", Callable(this, "_on_refresh_project_button_up"));
 	button_hbox_container->add_child(refresh_button);
 
 	Button* generate_soundbanks_button = memnew(Button);
 	generate_soundbanks_button->set_text("Generate SoundBanks");
-	generate_soundbanks_button->connect(
-			"button_up", callable_mp(this, &WwiseBrowser::_on_generate_soundbanks_button_up));
+	generate_soundbanks_button->connect("button_up", Callable(this, "_on_generate_soundbanks_button_up"));
 	button_hbox_container->add_child(generate_soundbanks_button);
 
 	Button* generate_wwise_ids_button = memnew(Button);
 	generate_wwise_ids_button->set_text("Generate Wwise IDs");
-	generate_wwise_ids_button->connect("button_up", callable_mp(this, &WwiseBrowser::_on_generate_ids_button_up));
+	generate_wwise_ids_button->connect("button_up", Callable(this, "_on_generate_ids_button_up"));
 	button_hbox_container->add_child(generate_wwise_ids_button);
 
 	top_vbox_container->add_child(button_hbox_container);
@@ -52,7 +51,7 @@ void WwiseBrowser::_enter_tree()
 	parent_vbox_container->add_child(tree);
 	search_text->connect("text_changed", Callable(tree, "_on_search_text_changed").bind(true));
 
-	WwiseProjectInfo::get_singleton()->connect("ws_refresh_completed", callable_mp(this, &WwiseBrowser::populate_tree));
+	WwiseProjectInfo::get_singleton()->connect("ws_refresh_completed", Callable(this, "populate_tree"));
 
 	add_control_to_bottom_panel(box_container, "Wwise Browser");
 }

@@ -18,21 +18,18 @@ void AkWwiseEditorProperty::_notification(int p_what)
 			const String placeholder_text = get_button_placeholder_text();
 			button->set_text(placeholder_text);
 			add_child(button);
-			button->connect("pressed", callable_mp(this, &AkWwiseEditorProperty::_on_button_pressed));
-			button->set_drag_forwarding(Callable(), callable_mp(this, &AkWwiseEditorProperty::_can_drop_data),
-					callable_mp(this, &AkWwiseEditorProperty::_drop_data));
+			button->connect("pressed", Callable(this, "_on_button_pressed"));
+			button->set_drag_forwarding(Callable(), Callable(this, "_can_drop_data"), Callable(this, "_drop_data"));
 			break;
 		}
 		case NOTIFICATION_READY:
 		{
-			WwiseProjectInfo::get_singleton()->connect(
-					"ws_refresh_completed", callable_mp(this, &AkWwiseEditorProperty::_update_property));
+			WwiseProjectInfo::get_singleton()->connect("ws_refresh_completed", Callable(this, "_update_property"));
 			break;
 		}
 		case NOTIFICATION_EXIT_TREE:
 		{
-			WwiseProjectInfo::get_singleton()->disconnect(
-					"ws_refresh_completed", callable_mp(this, &AkWwiseEditorProperty::_update_property));
+			WwiseProjectInfo::get_singleton()->disconnect("ws_refresh_completed", Callable(this, "_update_property"));
 			break;
 		}
 	}
@@ -100,8 +97,7 @@ void AkWwiseEditorProperty::_on_button_pressed()
 
 	picker = memnew(AkWwiseInspectorPicker);
 	add_child(picker);
-	picker->tree->connect(
-			"ws_wwise_property_activated", callable_mp(this, &AkWwiseEditorProperty::_on_wwise_tree_item_selected));
+	picker->tree->connect("ws_wwise_property_activated", Callable(this, "_on_wwise_tree_item_selected"));
 	picker->open(get_wwise_object_type(), get_global_mouse_position());
 }
 

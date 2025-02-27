@@ -31,12 +31,12 @@ void WwiseAuxBus::_notification(int p_what)
 	{
 		case NOTIFICATION_POSTINITIALIZE:
 		{
-			connect("ws_post_resource_init", callable_mp(this, &WwiseAuxBus::_on_post_resource_init));
+			connect("ws_post_resource_init", Callable(this, "_on_post_resource_init"));
 			break;
 		}
 		case NOTIFICATION_PREDELETE:
 		{
-			disconnect("ws_post_resource_init", callable_mp(this, &WwiseAuxBus::_on_post_resource_init));
+			disconnect("ws_post_resource_init", Callable(this, "_on_post_resource_init"));
 			unload_auto_bank();
 			break;
 		}

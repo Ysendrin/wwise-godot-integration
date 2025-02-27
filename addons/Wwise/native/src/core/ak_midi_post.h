@@ -26,7 +26,7 @@ protected:
 
 		ClassDB::bind_method(D_METHOD("set_by_param2", "param2"), &AkMidiPost::set_by_param2);
 		ClassDB::bind_method(D_METHOD("get_by_param2"), &AkMidiPost::get_by_param2);
-		ADD_PROPERTY(PropertyInfo(Variant::INT, "by_param2"), "set_by_param2", "get_by_param2");
+		ADD_PROPERTY(PropertyInfo(Variant::INT, "by_param2"), "set_by_param2", "get_by_param2:");
 
 		ClassDB::bind_method(D_METHOD("set_by_velocity", "velocity"), &AkMidiPost::set_by_velocity);
 		ClassDB::bind_method(D_METHOD("get_by_velocity"), &AkMidiPost::get_by_velocity);

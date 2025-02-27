@@ -1,1 +1,1 @@
-scons platform=windows target=template_debug wwise_sdk=$env:WWISESDK use_static_cpp=yes
+scons platform=windows target=template_debug wwise_sdk="D:/Logiciels/Audiokinetic/Wwise2024.1.2.8726/SDK" use_static_cpp=yes wwise_config=profile

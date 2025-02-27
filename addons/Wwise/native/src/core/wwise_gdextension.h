@@ -1,11 +1,11 @@
 #pragma once
 
-#include "core/wwise_external_source_info.h"
 #include "core/ak_midi_post.h"
 #include "core/ak_utils.h"
 #include "core/types/wwise_acoustic_texture.h"
 #include "core/utils.h"
 #include "core/wwise_bank_manager.h"
+#include "core/wwise_external_source_info.h"
 #include "core/wwise_io_hook.h"
 #include "core/wwise_platform_info.h"
 #include "core/wwise_settings.h"

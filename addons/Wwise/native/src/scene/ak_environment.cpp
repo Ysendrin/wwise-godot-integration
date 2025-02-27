@@ -18,16 +18,16 @@ void AkEnvironment::_enter_tree()
 {
 	RETURN_IF_EDITOR;
 
-	connect("area_entered", callable_mp(this, &AkEnvironment::_on_area_entered));
-	connect("area_exited", callable_mp(this, &AkEnvironment::_on_area_exited));
+	connect("area_entered", Callable(this, "_on_area_entered"));
+	connect("area_exited", Callable(this, "_on_area_exited"));
 }
 
-void AkEnvironment::_exit_tree() 
+void AkEnvironment::_exit_tree()
 {
 	RETURN_IF_EDITOR;
 
-	disconnect("area_entered", callable_mp(this, &AkEnvironment::_on_area_entered));
-	disconnect("area_exited", callable_mp(this, &AkEnvironment::_on_area_exited));
+	disconnect("area_entered", Callable(this, "_on_area_entered"));
+	disconnect("area_exited", Callable(this, "_on_area_exited"));
 }
 
 void AkEnvironment::_on_area_entered(const Area3D* area)

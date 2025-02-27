@@ -21,9 +21,11 @@ void AkSoundBankDirectoryWatcherPlugin::_on_timer_timeout()
 		if (!empty_base_path_error_was_logged)
 		{
 			UtilityFunctions::push_warning(
-					"WwiseGodot: The 'Root Output Path' setting in Wwise's Common User Settings (found under Godot Project > "
+					"WwiseGodot: The 'Root Output Path' setting in Wwise's Common User Settings (found under Godot "
+					"Project > "
 					"Project Settings...) is empty. SoundBanks must be generated inside your Godot project "
-					"folder. Please generate your SoundBanks within the Godot project and update the 'Root Output Path' setting "
+					"folder. Please generate your SoundBanks within the Godot project and update the 'Root Output "
+					"Path' setting "
 					"in your project settings to match the SoundBanks location in order to complete the setup "
 					"process.");
 			empty_base_path_error_was_logged = true;
@@ -53,8 +55,7 @@ void AkSoundBankDirectoryWatcherPlugin::_on_timer_timeout()
 	{
 		uint64_t time = FileAccess::get_modified_time(root_output_path);
 
-		task = std::async(std::launch::async,
-				[this, root_output_path, time, custom_platform_name]()
+		task = std::async(std::launch::async, [this, root_output_path, time, custom_platform_name]()
 				{ this->init_project_db(root_output_path, time, custom_platform_name); });
 
 		last_file_check = Time::get_singleton()->get_unix_time_from_system();
@@ -67,7 +68,7 @@ void AkSoundBankDirectoryWatcherPlugin::_enter_tree()
 	timer->set_wait_time(s_between_checks);
 	timer->set_one_shot(false);
 	add_child(timer);
-	timer->connect("timeout", callable_mp(this, &AkSoundBankDirectoryWatcherPlugin::_on_timer_timeout));
+	timer->connect("timeout", Callable(this, "_on_timer_timeout"));
 	timer->start();
 	_on_timer_timeout();
 }
