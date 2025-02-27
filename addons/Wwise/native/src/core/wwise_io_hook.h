@@ -1,10 +1,10 @@
 #pragma once
 
+#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
+#include <AK/Tools/Common/AkObject.h>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/variant/callable.hpp>
-#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
-#include <AK/Tools/Common/AkObject.h>
 
 using namespace godot;
 
@@ -31,6 +31,7 @@ public:
 
 	String banks_path{};
 	String language_folder{};
+	bool use_subfolders{};
 
 	~WwiseIOHook() override;
 
@@ -40,8 +41,6 @@ public:
 	virtual void BatchOpen(AkUInt32 in_u_num_files, AkAsyncFileOpenData** in_pp_items) override;
 	virtual void BatchRead(AkUInt32 in_u_num_transfers, BatchIoTransferItem* in_p_transfer_items) override;
 	virtual void BatchWrite(AkUInt32 in_u_num_transfers, BatchIoTransferItem* in_p_transfer_items) override;
-	virtual void BatchCancel(AkUInt32 in_u_num_transfers, BatchIoTransferItem* in_p_transfer_items,
-			bool** io_ppb_cancel_all_transfers_for_this_file) override;
 	virtual AKRESULT Close(AkFileDesc* in_file_desc) override;
 	virtual AkUInt32 GetBlockSize(AkFileDesc& in_file_desc) override;
 	virtual void GetDeviceDesc(AkDeviceDesc& out_device_desc) override;
@@ -65,4 +64,5 @@ public:
 
 	void set_banks_path(const String& banks_path);
 	void set_language_folder(const String& language_folder);
+	void set_use_subfolders(bool p_use_subfolders);
 };

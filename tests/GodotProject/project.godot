@@ -1,0 +1,28 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="WwiseGodotTests"
+config/features=PackedStringArray("4.3")
+
+[autoload]
+
+WwiseRuntimeManager="*res://addons/Wwise/runtime/wwise_runtime_manager.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
+[wwise]
+
+common_user_settings/root_output_path="res://GeneratedSoundBanks"
+common_user_settings/startup_language="en_US"
+project_settings/windows_platform_info="res://Wwise/resources/Windows.tres"

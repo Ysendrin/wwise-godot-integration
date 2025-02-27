@@ -18,19 +18,16 @@ void AkGeometry::_bind_methods()
 	ClassDB::bind_method(D_METHOD("set_transmission_loss_value", "transmission_loss_value"),
 			&AkGeometry::set_transmission_loss_value);
 	ClassDB::bind_method(D_METHOD("get_transmission_loss_value"), &AkGeometry::get_transmission_loss_value);
-	ClassDB::bind_method(D_METHOD("set_associated_room", "associated_room"), &AkGeometry::set_associated_room);
-	ClassDB::bind_method(D_METHOD("get_associated_room"), &AkGeometry::get_associated_room);
 
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "is_static", PROPERTY_HINT_NONE), "set_is_static", "get_is_static");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enable_diffraction", PROPERTY_HINT_NONE), "set_enable_diffraction",
 			"get_enable_diffraction");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "enable_diffraction_on_boundary_edges", PROPERTY_HINT_NONE),
 			"set_enable_diffraction_on_boundary_edges", "get_enable_diffraction_on_boundary_edges");
-	// todo(alex): Add proper hint for acoustic texture
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "acoustic_texture", PROPERTY_HINT_NONE), "set_acoustic_texture",
-			"get_acoustic_texture");
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "associated_room", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "AkRoom"),
-			"set_associated_room", "get_associated_room");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "acoustic_texture", PROPERTY_HINT_RESOURCE_TYPE, "WwiseAcousticTexture"),
+			"set_acoustic_texture", "get_acoustic_texture");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "transmission_loss_value", PROPERTY_HINT_NONE),
+			"set_transmission_loss_value", "get_transmission_loss_value");
 }
 
 void AkGeometry::_notification(int p_what, bool reversed)
@@ -50,16 +47,6 @@ void AkGeometry::_notification(int p_what, bool reversed)
 			set_geometry(mesh_instance);
 		}
 	}
-}
-
-void AkGeometry::add_indices(int a, int b, int c, int d)
-{
-	indices.append(a);
-	indices.append(c);
-	indices.append(d);
-	indices.append(a);
-	indices.append(b);
-	indices.append(c);
 }
 
 void AkGeometry::_enter_tree()
@@ -105,7 +92,7 @@ bool AkGeometry::set_geometry(const MeshInstance3D* mesh_instance)
 	for (int i = 0; i < mdt->get_vertex_count(); ++i)
 	{
 		Vector3 vertex = mdt->get_vertex(i);
-		vertices.append(vertex);
+		vertices.append(Vector3(vertex.x, vertex.y, -vertex.z));
 	}
 
 	for (int i = 0; i < mdt->get_face_count(); ++i)
@@ -114,13 +101,8 @@ bool AkGeometry::set_geometry(const MeshInstance3D* mesh_instance)
 		int point_1 = mdt->get_face_vertex(i, 1);
 		int point_2 = mdt->get_face_vertex(i, 2);
 		triangles.append(point_0);
-		triangles.append(point_1);
 		triangles.append(point_2);
-	}
-
-	if (!associated_room.is_empty())
-	{
-		room_node = get_node<Area3D>(associated_room);
+		triangles.append(point_1);
 	}
 
 	Wwise* soundengine = Wwise::get_singleton();
@@ -131,8 +113,7 @@ bool AkGeometry::set_geometry(const MeshInstance3D* mesh_instance)
 	{
 		geometry_result = soundengine->set_geometry(vertices, triangles, acoustic_texture, transmission_loss_value,
 				this, enable_diffraction, enable_diffraction_on_boundary_edges);
-		instance_result =
-				soundengine->set_geometry_instance(this, get_global_transform(), geometry_instance, room_node);
+		instance_result = soundengine->set_geometry_instance(this, get_global_transform(), geometry_instance);
 	}
 
 	vertices.clear();
@@ -144,13 +125,9 @@ bool AkGeometry::set_geometry(const MeshInstance3D* mesh_instance)
 Ref<MeshDataTool> AkGeometry::create_mesh_data_tool(const Ref<Mesh>& mesh)
 {
 	Ref<ArrayMesh> array_mesh;
-
-	if (mesh->get_class() != "ArrayMesh")
-	{
-		Array surface_arrays = mesh->surface_get_arrays(0);
-		array_mesh.instantiate();
-		array_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, surface_arrays);
-	}
+	Array surface_arrays = mesh->surface_get_arrays(0);
+	array_mesh.instantiate();
+	array_mesh->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, surface_arrays);
 
 	Ref<MeshDataTool> mesh_data_tool;
 	mesh_data_tool.instantiate();
@@ -173,12 +150,13 @@ void AkGeometry::set_enable_diffraction_on_boundary_edges(bool enable_diffractio
 
 bool AkGeometry::get_enable_diffraction_on_boundary_edges() const { return enable_diffraction_on_boundary_edges; }
 
-void AkGeometry::set_acoustic_texture(const Ref<Resource>& acoustic_texture)
+void AkGeometry::set_acoustic_texture(const Ref<WwiseAcousticTexture>& acoustic_texture)
 {
 	this->acoustic_texture = acoustic_texture;
+	notify_property_list_changed();
 }
 
-Ref<Resource> AkGeometry::get_acoustic_texture() const { return acoustic_texture; }
+Ref<WwiseAcousticTexture> AkGeometry::get_acoustic_texture() const { return acoustic_texture; }
 
 void AkGeometry::set_transmission_loss_value(float transmission_loss_value)
 {
@@ -186,7 +164,3 @@ void AkGeometry::set_transmission_loss_value(float transmission_loss_value)
 }
 
 float AkGeometry::get_transmission_loss_value() const { return transmission_loss_value; }
-
-void AkGeometry::set_associated_room(const NodePath& associated_room) { this->associated_room = associated_room; }
-
-NodePath AkGeometry::get_associated_room() const { return associated_room; }

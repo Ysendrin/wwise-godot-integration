@@ -1,6 +1,6 @@
 #include "ak_environment_data.h"
 
-void AkAuxArrayData::set_values(const Node* event_node)
+void AkAuxArrayData::set_values(Node* event_node)
 {
 	Wwise::get_singleton()->set_game_object_aux_send_values(event_node, data, data.size());
 }
@@ -54,27 +54,65 @@ void AkEnvironmentData::add_highest_priority_environments()
 {
 	if (aux_array_data.data.size() < active_environments.size())
 	{
+		Vector<int> invalid_indices;
+
 		for (int i = 0; i < active_environments.size(); i++)
 		{
+			Variant environment = active_environments[i];
+
+			if (!UtilityFunctions::is_instance_valid(environment))
+			{
+				invalid_indices.push_back(i);
+				continue;
+			}
+
 			const AkEnvironment* env = Object::cast_to<AkEnvironment>(active_environments[i].operator godot::Object*());
 
 			if (env)
 			{
-				if (i == 0 && !aux_array_data.data.has(env->get_aux_bus()))
+				if (i == 0)
 				{
-					Dictionary aux_data;
-					Dictionary aux_bus = env->get_aux_bus();
-					int id = aux_bus.get("id", 0);
-					aux_data["control_value"] = 1.0f;
-					aux_data["aux_bus_id"] = id;
-					aux_array_data.data.append(aux_data);
+					Ref<WwiseAuxBus> aux_bus = env->get_aux_bus();
+					if (aux_bus.is_null())
+					{
+						continue;
+					}
+
+					bool exists = false;
+					for (int j = 0; j < aux_array_data.data.size(); j++)
+					{
+						Dictionary current_aux_data = aux_array_data.data[j];
+						if (current_aux_data.has("aux_bus_id") &&
+								(uint32_t)current_aux_data["aux_bus_id"] == aux_bus->get_id())
+						{
+							exists = true;
+							break;
+						}
+					}
+
+					if (!exists)
+					{
+						Dictionary aux_data;
+						aux_data["control_value"] = 1.0f;
+						aux_data["aux_bus_id"] = aux_bus->get_id();
+						aux_array_data.data.append(aux_data);
+					}
 				}
 			}
+		}
+
+		if (!invalid_indices.is_empty())
+		{
+			for (int i = invalid_indices.size() - 1; i >= 0; i--)
+			{
+				active_environments.remove_at(invalid_indices[i]);
+			}
+			have_environments_changed = true;
 		}
 	}
 }
 
-void AkEnvironmentData::update_aux_send(const Node* event, const Vector3& position)
+void AkEnvironmentData::update_aux_send(Node* event, const Vector3& position)
 {
 	if (!have_environments_changed && position == last_position)
 	{

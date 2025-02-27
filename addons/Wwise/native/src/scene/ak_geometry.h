@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/types/wwise_acoustic_texture.h"
 #include "core/utils.h"
 #include "core/wwise_gdextension.h"
 #include <godot_cpp/classes/area3d.hpp>
@@ -23,22 +24,17 @@ protected:
 	void _notification(int p_what, bool reversed = false);
 
 private:
+	MeshInstance3D* mesh_instance{ nullptr };
+	Object* geometry_instance{ nullptr };
 	bool is_static{ true };
 	bool enable_diffraction{};
 	bool enable_diffraction_on_boundary_edges{};
-	Ref<Resource> acoustic_texture{};
+	Ref<WwiseAcousticTexture> acoustic_texture;
 	float transmission_loss_value{ 1.0f };
-	NodePath associated_room{};
-
-	Area3D* room_node{};
 	AABB aabb{};
 	PackedInt32Array indices{};
-
 	Array vertices{};
 	Array triangles{};
-	MeshInstance3D* mesh_instance{};
-	Object* geometry_instance{};
-	void add_indices(int a, int b, int c, int d);
 
 public:
 	virtual void _enter_tree() override;
@@ -55,12 +51,9 @@ public:
 	void set_enable_diffraction_on_boundary_edges(bool enable_diffraction_on_boundary_edges);
 	bool get_enable_diffraction_on_boundary_edges() const;
 
-	void set_acoustic_texture(const Ref<Resource>& acoustic_texture);
-	Ref<Resource> get_acoustic_texture() const;
+	void set_acoustic_texture(const Ref<WwiseAcousticTexture>& acoustic_texture);
+	Ref<WwiseAcousticTexture> get_acoustic_texture() const;
 
 	void set_transmission_loss_value(float transmission_loss_value);
 	float get_transmission_loss_value() const;
-
-	void set_associated_room(const NodePath& associated_room);
-	NodePath get_associated_room() const;
 };
