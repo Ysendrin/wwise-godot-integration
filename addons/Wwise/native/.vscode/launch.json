@@ -16,6 +16,13 @@
             "cwd": "${cwd}"
         },
         {
+            "name": "build release",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": ".vscode/build_release.ps1",
+            "cwd": "${cwd}"
+        },
+        {
             "name": "build all",
             "type": "PowerShell",
             "request": "launch",

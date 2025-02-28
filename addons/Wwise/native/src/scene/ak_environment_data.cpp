@@ -1,4 +1,5 @@
 #include "ak_environment_data.h"
+#include <godot-cpp\include\godot_cpp\templates\vector.hpp>
 
 void AkAuxArrayData::set_values(const Node* event_node)
 {
@@ -53,8 +54,17 @@ void AkEnvironmentData::add_highest_priority_environments()
 {
 	if (aux_array_data.data.size() < active_environments.size())
 	{
+		Vector<int> invalid_indices;
+
 		for (int i = 0; i < active_environments.size(); i++)
 		{
+			Variant environment = active_environments[i];
+			if (!UtilityFunctions::is_instance_valid(environment))
+			{
+				invalid_indices.push_back(i);
+				continue;
+			}
+
 			const AkEnvironment* env = Object::cast_to<AkEnvironment>(active_environments[i].operator godot::Object*());
 
 			if (env)
@@ -69,6 +79,15 @@ void AkEnvironmentData::add_highest_priority_environments()
 					aux_array_data.data.append(aux_data);
 				}
 			}
+		}
+
+		if (!invalid_indices.is_empty())
+		{
+			for (int i = invalid_indices.size() - 1; i >= 0; i--)
+			{
+				active_environments.remove_at(invalid_indices[i]);
+			}
+			have_environments_changed = true;
 		}
 	}
 }

@@ -2,9 +2,9 @@
 
 #include "core/utils.h"
 #include "core/wwise_gdextension.h"
+#include "scene/ak_environment.h"
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/variant/array.hpp>
-#include "scene/ak_environment.h"
 
 using namespace godot;
 
