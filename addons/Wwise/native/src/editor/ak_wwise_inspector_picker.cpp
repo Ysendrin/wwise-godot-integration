@@ -1,4 +1,5 @@
 #include "ak_wwise_inspector_picker.h"
+#include "wwise_editor_plugin.h"
 
 void AkWwiseInspectorPicker::_notification(int p_what)
 {
@@ -8,7 +9,7 @@ void AkWwiseInspectorPicker::_notification(int p_what)
 		{
 			if (!is_visible())
 			{
-				EditorInterface::get_singleton()->get_editor_settings()->set_project_metadata(
+				WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_editor_settings()->set_project_metadata(
 						"dialog_bounds", "wwise_picker", Rect2(get_position(), get_size()));
 			}
 		}
@@ -50,10 +51,11 @@ void AkWwiseInspectorPicker::open(WwiseObjectType p_wwise_object_type, Point2i p
 {
 	data_source->init(tree, p_wwise_object_type);
 
-	Rect2 saved_size = EditorInterface::get_singleton()->get_editor_settings()->get_project_metadata(
-			"dialog_bounds", "wwise_picker", Rect2());
+	Rect2 saved_size =
+			WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_editor_settings()->get_project_metadata(
+					"dialog_bounds", "wwise_picker", Rect2());
 
-	const auto ed_scale = EditorInterface::get_singleton()->get_editor_scale();
+	const auto ed_scale = WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_editor_scale();
 	Size2i min_size = Size2(400, 600) * ed_scale;
 
 	if (saved_size != Rect2())

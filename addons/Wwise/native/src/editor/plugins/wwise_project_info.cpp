@@ -88,7 +88,7 @@ Ref<WwiseProjectData> WwiseProjectInfo::get_data()
 		if (FileAccess::file_exists(project_data_path))
 		{
 			project_data = ResourceLoader::get_singleton()->load(
-					project_data_path, String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE_DEEP);
+					project_data_path, String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE);
 		}
 		else
 		{
@@ -107,7 +107,7 @@ void WwiseProjectInfo::create_wwise_project_data()
 	save_project_data(project_data);
 
 	project_data = ResourceLoader::get_singleton()->load(
-			AkEditorSettings::get_project_data_path(), String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE_DEEP);
+			AkEditorSettings::get_project_data_path(), String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE);
 }
 
 void WwiseProjectInfo::refresh()
@@ -187,15 +187,16 @@ void WwiseProjectInfo::_on_populate_completed()
 
 	const String project_data_path = AkEditorSettings::get_project_data_path();
 	project_data = ResourceLoader::get_singleton()->load(
-			project_data_path, String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE_DEEP);
-	EditorInterface::get_singleton()->get_resource_filesystem()->update_file(project_data_path);
+			project_data_path, String(), ResourceLoader::CacheMode::CACHE_MODE_REPLACE);
+	WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->update_file(
+			project_data_path);
 
 	update_all_wwise_assets();
 }
 
 void WwiseProjectInfo::_on_updating_assets_completed()
 {
-	EditorInterface::get_singleton()->get_resource_filesystem()->scan();
+	WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->scan();
 	emit_signal("ws_refresh_completed");
 	UtilityFunctions::print("WwiseGodot: Project has been refreshed successfully.");
 }

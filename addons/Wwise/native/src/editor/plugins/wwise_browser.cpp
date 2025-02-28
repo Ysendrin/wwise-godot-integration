@@ -8,7 +8,7 @@ void WwiseBrowser::_enter_tree()
 	box_container->set_anchors_preset(Control::LayoutPreset::PRESET_FULL_RECT);
 	box_container->set_h_size_flags(Control::SizeFlags::SIZE_EXPAND_FILL);
 	box_container->set_v_size_flags(Control::SizeFlags::SIZE_EXPAND_FILL);
-	const float ed_scale = EditorInterface::get_singleton()->get_editor_scale();
+	const float ed_scale = WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_editor_scale();
 	box_container->set_custom_minimum_size(Size2(0, 300) * ed_scale);
 	VBoxContainer* parent_vbox_container = memnew(VBoxContainer);
 	parent_vbox_container->set_anchors_preset(Control::LayoutPreset::PRESET_FULL_RECT);

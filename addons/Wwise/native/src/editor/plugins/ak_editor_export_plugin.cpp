@@ -53,10 +53,10 @@ void AkEditorExportPlugin::export_plugins_for_platform(const String& p_platform,
 		{
 			handle_linux_plugin(plugin_info, p_dsp_path);
 		}
-		else if (p_platform == "android")
-		{
-			handle_android_plugin(plugin_info, p_dsp_path, p_features);
-		}
+		// else if (p_platform == "android")
+		// {
+		// 	handle_android_plugin(plugin_info, p_dsp_path, p_features);
+		// }
 	}
 }
 
@@ -135,21 +135,21 @@ void AkEditorExportPlugin::handle_ios_plugins(
 	add_ios_cpp_code(final_cpp_code);
 }
 
-void AkEditorExportPlugin::handle_android_plugin(
-		const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path, const PackedStringArray& p_features)
-{
-	if (p_features.has("arm64"))
-	{
-		String plugin_path_arm64 = p_dsp_path.path_join(vformat("lib%s.so", p_plugin_info->get_dll_name()));
-		add_shared_object(plugin_path_arm64, PackedStringArray({ "android", "arm64" }), "");
-	}
+// void AkEditorExportPlugin::handle_android_plugin(
+// 		const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path, const PackedStringArray& p_features)
+// {
+// 	if (p_features.has("arm64"))
+// 	{
+// 		String plugin_path_arm64 = p_dsp_path.path_join(vformat("lib%s.so", p_plugin_info->get_dll_name()));
+// 		add_shared_object(plugin_path_arm64, PackedStringArray({ "android", "arm64" }), "");
+// 	}
 
-	if (p_features.has("arm32"))
-	{
-		String plugin_path_arm32 = p_dsp_path.path_join(vformat("lib%s.so", p_plugin_info->get_dll_name()));
-		add_shared_object(plugin_path_arm32, PackedStringArray({ "android", "arm32" }), "");
-	}
-}
+// 	if (p_features.has("arm32"))
+// 	{
+// 		String plugin_path_arm32 = p_dsp_path.path_join(vformat("lib%s.so", p_plugin_info->get_dll_name()));
+// 		add_shared_object(plugin_path_arm32, PackedStringArray({ "android", "arm32" }), "");
+// 	}
+// }
 
 void AkEditorExportPlugin::add_files_recursive(Ref<DirAccess> dir, const String& base_path)
 {
@@ -205,11 +205,13 @@ void AkEditorExportPlugin::_export_begin(
 	WwiseSettings* settings = WwiseSettings::get_singleton();
 	String root_output_path = settings->get_setting(settings->common_user_settings.root_output_path);
 
-	std::map<String, StringName> platform_settings{ { "windows", settings->project_settings.windows_platform_info },
+	std::map<String, StringName> platform_settings{
+		{ "windows", settings->project_settings.windows_platform_info },
 		{ "macos", settings->project_settings.mac_platform_info },
 		{ "linux", settings->project_settings.linux_platform_info },
 		{ "ios", settings->project_settings.ios_platform_info },
-		{ "android", settings->project_settings.android_platform_info } };
+		// { "android", settings->project_settings.android_platform_info }
+	};
 
 	for (const auto& feature : p_features)
 	{

@@ -47,7 +47,7 @@ void WwiseProjectDatabase::post_init_callback()
 			{ "Mac", settings->project_settings.mac_platform_info },
 			{ "Linux", settings->project_settings.linux_platform_info },
 			{ "iOS", settings->project_settings.ios_platform_info },
-			{ "Android", settings->project_settings.android_platform_info },
+			// { "Android", settings->project_settings.android_platform_info },
 		};
 
 		const auto& project_info = platform_data->PlatformRef.ProjectInfo.GetProjectInfo();
@@ -90,10 +90,10 @@ void WwiseProjectDatabase::post_init_callback()
 					String plugin_name = plugin->name;
 					String plugin_dll = plugin->dll;
 					String plugin_static_lib = plugin->staticLib;
-					
+
 					Ref<WwisePluginInfo> plugin_info;
 					plugin_info.instantiate();
-					plugin_info->set_plugin_name(plugin_name); 
+					plugin_info->set_plugin_name(plugin_name);
 					plugin_info->set_plugin_id(plugin_id);
 					plugin_info->set_dll_name(plugin_dll);
 					plugin_info->set_static_lib_name(plugin_static_lib);

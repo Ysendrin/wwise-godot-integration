@@ -5,6 +5,7 @@ CAkLock AkJSONBuilder::ak_lock;
 std::vector<AkJSONBuilder::TaskGroup> AkJSONBuilder::active_task_groups;
 bool AkJSONBuilder::all_tasks_completed;
 bool AkJSONBuilder::running;
+AkJSONBuilder* AkJSONBuilder::singleton = nullptr;
 
 void AkJSONBuilder::_bind_methods() {}
 
@@ -327,23 +328,23 @@ void AkJSONBuilder::populate()
 		String description;
 	};
 
-	TaskConfig tasks[] = { { callable_mp_static(AkJSONBuilder::process_soundbank_worker),
+	TaskConfig tasks[] = { { Callable(AkJSONBuilder::get_singleton(), "process_soundbank_worker"),
 								   current_platform_data->SoundBanks.Size(), "WwiseGodot: Processing SoundBanks" },
-		{ callable_mp_static(AkJSONBuilder::process_event_worker), current_platform_data->Events.Size(),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_event_worker"), current_platform_data->Events.Size(),
 				"WwiseGodot: Processing Events" },
-		{ callable_mp_static(AkJSONBuilder::process_bus_worker), current_platform_data->Busses.Size(),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_bus_worker"), current_platform_data->Busses.Size(),
 				"WwiseGodot: Processing Busses" },
-		{ callable_mp_static(AkJSONBuilder::process_aux_bus_worker), current_platform_data->AuxBusses.Size(),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_aux_bus_worker"), current_platform_data->AuxBusses.Size(),
 				"WwiseGodot: Processing Aux Busses" },
-		{ callable_mp_static(AkJSONBuilder::process_acoustic_texture_worker),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_acoustic_texture_worker"),
 				current_platform_data->AcousticTextures.Size(), "WwiseGodot: Processing Acoustic Textures" },
-		{ callable_mp_static(AkJSONBuilder::process_state_group_worker), current_platform_data->StateGroups.Size(),
-				"WwiseGodot: Processing State Groups" },
-		{ callable_mp_static(AkJSONBuilder::process_switch_group_worker), current_platform_data->SwitchGroups.Size(),
-				"WwiseGodot: Processing Switch Groups" },
-		{ callable_mp_static(AkJSONBuilder::process_game_parameter_worker),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_state_group_worker"),
+				current_platform_data->StateGroups.Size(), "WwiseGodot: Processing State Groups" },
+		{ Callable(AkJSONBuilder::get_singleton(), "process_switch_group_worker"),
+				current_platform_data->SwitchGroups.Size(), "WwiseGodot: Processing Switch Groups" },
+		{ Callable(AkJSONBuilder::get_singleton(), "process_game_parameter_worker"),
 				current_platform_data->GameParameters.Size(), "WwiseGodot: Processing Game Parameters" },
-		{ callable_mp_static(AkJSONBuilder::process_trigger_worker), current_platform_data->Triggers.Size(),
+		{ Callable(AkJSONBuilder::get_singleton(), "process_trigger_worker"), current_platform_data->Triggers.Size(),
 				"WwiseGodot: Processing Triggers" } };
 
 	for (const auto& task : tasks)

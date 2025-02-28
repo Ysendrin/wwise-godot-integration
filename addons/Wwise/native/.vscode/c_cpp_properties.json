@@ -6,6 +6,7 @@
                 "${workspaceFolder}/**",
                 "${env:WWISESDK}",
                 "${workspaceFolder}/src/**",
+                "D:/Logiciels/Audiokinetic/Wwise2024.1.2.8726/SDK/include"
             ],
             "defines": [
                 "_DEBUG",

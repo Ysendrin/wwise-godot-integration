@@ -30,8 +30,8 @@ private:
 	void handle_macos_plugin(const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path);
 	void handle_linux_plugin(const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path);
 	void handle_ios_plugins(const TypedArray<WwisePluginInfo>& p_plugin_infos, const String& p_dsp_path);
-	void handle_android_plugin(
-			const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path, const PackedStringArray& p_features);
+	// void handle_android_plugin(
+	// 		const Ref<WwisePluginInfo>& p_plugin_info, const String& p_dsp_path, const PackedStringArray& p_features);
 	void add_files_recursive(Ref<DirAccess> dir, const String& base_path);
 
 public:

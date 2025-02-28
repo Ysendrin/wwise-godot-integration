@@ -150,8 +150,8 @@ inline Ref<T> WwiseBaseType::find_or_create_wwise_object(
 	}
 
 	ResourceSaver::get_singleton()->save(asset, path);
-	EditorInterface::get_singleton()->get_resource_filesystem()->scan();
-	EditorInterface::get_singleton()->get_resource_filesystem()->update_file(path);
+	WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->scan();
+	WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->update_file(path);
 	asset = ResourceLoader::get_singleton()->load(path);
 
 	return asset;
@@ -192,7 +192,7 @@ void WwiseBaseType::update_wwise_object(WwiseObjectType wwise_object_type, const
 			return;
 		}
 
-		auto editor_interface = EditorInterface::get_singleton();
+		auto editor_interface = WwiseEditorPlugin::get_singleton()->get_editor_interface();
 		editor_interface->get_resource_filesystem()->update_file(asset_path);
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/types/wwise_base_type.h"
+#include "editor/wwise_editor_plugin.h"
 
 using namespace godot;
 
@@ -34,8 +35,9 @@ public:
 		{
 			p_child_ref->set_group_ref(object_reference);
 			ResourceSaver::get_singleton()->save(p_child_ref, p_child_ref->get_path());
-			EditorInterface::get_singleton()->get_resource_filesystem()->scan();
-			EditorInterface::get_singleton()->get_resource_filesystem()->update_file(p_child_ref->get_path());
+			WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->scan();
+			WwiseEditorPlugin::get_singleton()->get_editor_interface()->get_resource_filesystem()->update_file(
+					p_child_ref->get_path());
 		}
 	}
 #endif

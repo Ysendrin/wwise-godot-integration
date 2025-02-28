@@ -29,7 +29,7 @@ public:
 	virtual String get_button_placeholder_text() const;
 	virtual Ref<Texture2D> get_property_icon() const;
 	virtual WwiseObjectType get_wwise_object_type() const;
-	virtual void set_wwise_reference(const AkWwiseTreeItem* p_item) = 0;
+	virtual void set_wwise_reference(const AkWwiseTreeItem* p_item) {}
 	virtual void _update_property() override;
 	virtual bool _can_drop_data(const Vector2& p_at_position, const Variant& p_data) const override;
 	virtual void _drop_data(const Vector2& p_at_position, const Variant& p_data) override;

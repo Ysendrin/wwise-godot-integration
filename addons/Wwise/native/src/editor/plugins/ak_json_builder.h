@@ -1,7 +1,7 @@
 #pragma once
 
-#include "editor/wwise_project_database.h"
 #include "editor/plugins/wwise_project_info.h"
+#include "editor/wwise_project_database.h"
 #include "editor/wwise_tree_object.h"
 #include "editor/wwise_tree_object_event.h"
 #include <godot_cpp/classes/editor_plugin.hpp>
@@ -19,6 +19,20 @@ protected:
 	static void _bind_methods();
 
 private:
+	static AkJSONBuilder* singleton;
+
+	AkJSONBuilder()
+	{
+		ERR_FAIL_COND(singleton != nullptr);
+		singleton = this;
+	}
+
+	~AkJSONBuilder()
+	{
+		ERR_FAIL_COND(singleton != this);
+		singleton = nullptr;
+	}
+
 	const static WwisePlatformDataStructure* current_platform_data;
 	static CAkLock ak_lock;
 	struct TaskGroup
@@ -39,17 +53,19 @@ private:
 	static void serialise_metadata(const MetadataType* p_metadata, WwiseObjectType p_type,
 			std::function<Array()> p_get_root_func, std::function<void(Ref<ObjectType>)> p_configure_object = nullptr);
 
-	static void process_soundbank_worker(int p_index);
-	static void process_event_worker(int p_index);
-	static void process_bus_worker(int p_index);
-	static void process_aux_bus_worker(int p_index);
-	static void process_acoustic_texture_worker(int p_index);
-	static void process_state_group_worker(int p_index);
-	static void process_switch_group_worker(int p_index);
-	static void process_game_parameter_worker(int p_index);
-	static void process_trigger_worker(int p_index);
+	void process_soundbank_worker(int p_index);
+	void process_event_worker(int p_index);
+	void process_bus_worker(int p_index);
+	void process_aux_bus_worker(int p_index);
+	void process_acoustic_texture_worker(int p_index);
+	void process_state_group_worker(int p_index);
+	void process_switch_group_worker(int p_index);
+	void process_game_parameter_worker(int p_index);
+	void process_trigger_worker(int p_index);
 
 public:
 	virtual void _process(double p_delta);
 	static void populate();
+
+	static AkJSONBuilder* get_singleton() { return singleton; }
 };

@@ -104,8 +104,8 @@ public:
 		StringName ios_audio_session_category;
 		StringName ios_audio_session_category_options;
 		StringName ios_audio_session_mode;
-		StringName android_audio_api;
-		StringName android_round_frame_size_to_hw_size;
+		// StringName android_audio_api;
+		// StringName android_round_frame_size_to_hw_size;
 		StringName linux_audio_api;
 	};
 
@@ -117,7 +117,7 @@ public:
 		StringName mac_platform_info;
 		StringName linux_platform_info;
 		StringName ios_platform_info;
-		StringName android_platform_info;
+		// StringName android_platform_info;
 		StringName custom_platform_name;
 	};
 
@@ -132,7 +132,7 @@ public:
 	String GODOT_MAC_OSX_SETTING_POSTFIX = ".macos";
 	String GODOT_LINUX_SETTING_POSTFIX = ".linux";
 	String GODOT_IOS_SETTING_POSTFIX = ".ios";
-	String GODOT_ANDROID_SETTING_POSTFIX = ".android";
+	// String GODOT_ANDROID_SETTING_POSTFIX = ".android";
 
 	static WwiseSettings* get_singleton();
 	WwiseSettings();
