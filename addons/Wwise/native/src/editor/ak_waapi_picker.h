@@ -81,6 +81,9 @@ private:
 	void create_state_switch_class(
 			const Array& parent_array, const Array& child_array, const String& parent_type, const String& child_type);
 	void create_empty_class(const String& type);
+	void create_enum(const Array& data, const String& type);
+	void create_state_switch_enums(const Array& parent_array, const Array& child_array, const String& suffix);
+	void create_empty_enum(const String& type);
 
 public:
 	virtual void _enter_tree() override;

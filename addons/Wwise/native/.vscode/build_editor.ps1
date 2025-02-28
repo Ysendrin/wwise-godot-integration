@@ -1,1 +1,1 @@
-scons platform=windows target=editor wwise_sdk=$env:WWISESDK use_static_cpp=yes
+scons platform=windows target=editor wwise_sdk="D:\Logiciels\Audiokinetic\Wwise 2023.1.2.8444\SDK" use_static_cpp=yes

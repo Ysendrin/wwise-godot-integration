@@ -448,6 +448,18 @@ void AkWaapiPicker::generate_ids(const Array& data)
 	final_text = "class_name AK";
 	final_text += "\n\n";
 
+	create_enum(event_array, "Events");
+	create_state_switch_enums(state_group_array, state_array, "State");
+	create_state_switch_enums(switch_group_array, switch_array, "Switch");
+	create_enum(game_param_array, "GameParameters");
+	create_enum(trigger_array, "Triggers");
+	create_enum(soundbank_array, "Banks");
+	create_enum(bus_array, "Busses");
+	create_enum(aux_bus_array, "AuxBusses");
+	create_enum(audio_device_array, "AudioDevices");
+	create_enum(external_src_array, "ExternalSources");
+
+	final_text += "### CLASSES\n\n";
 	create_class(event_array, "EVENTS");
 	create_state_switch_class(state_group_array, state_array, "STATES", "STATE");
 	create_state_switch_class(switch_group_array, switch_array, "SWITCHES", "SWITCH");
@@ -551,6 +563,63 @@ void AkWaapiPicker::create_state_switch_class(
 	{
 		create_empty_class(parent_type);
 	}
+}
+
+void AkWaapiPicker::create_enum(const Array& data, const String& type)
+{
+	final_text += "### " + type.to_snake_case().to_upper() + "\n\n";
+	if (data.size() > 0)
+	{
+		final_text += "enum " + type + " {\n";
+
+		for (int i = 0; i < data.size(); ++i)
+		{
+			const String name = data[i].operator godot::Dictionary()["name"];
+			const String short_id = data[i].operator godot::Dictionary()["shortId"];
+
+			final_text += "\t" + name.to_upper().replace(" ", "_") + " = " + short_id + ",\n";
+		}
+
+		final_text += "}\n\n";
+	}
+	else
+	{
+		create_empty_enum(type);
+	}
+}
+
+void AkWaapiPicker::create_state_switch_enums(const Array& parent_array, const Array& child_array, const String& suffix)
+{
+	final_text += "### " + suffix.to_upper() + "\n\n";
+
+	if (parent_array.size() > 0)
+	{
+		for (int i = 0; i < parent_array.size(); ++i)
+		{
+			const String name = parent_array[i].operator godot::Dictionary()["name"];
+
+			final_text += "enum " + name.to_pascal_case().replace(" ", "") + suffix + " {\n";
+
+			for (int j = 0; j < child_array.size(); ++j)
+			{
+				if (child_array[j].get("parent.name") == parent_array[i].get("name"))
+				{
+					const String name = child_array[j].operator godot::Dictionary()["name"];
+					const String short_id = child_array[j].operator godot::Dictionary()["shortId"];
+
+					final_text += "\t" + name.to_upper().replace(" ", "_") + " = " + short_id + ",\n";
+				}
+			}
+			final_text += "}\n\n";
+		}
+	}
+}
+
+void AkWaapiPicker::create_empty_enum(const String& type)
+{
+	final_text += "enum " + type + "{\n";
+	final_text += "\tNO_DATA\n";
+	final_text += "}\n\n";
 }
 
 void AkWaapiPicker::create_empty_class(const String& type)
