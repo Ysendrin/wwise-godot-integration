@@ -41,7 +41,7 @@ void AkEnvironment::_on_area_entered(const Area3D* area)
 
 	if (parent)
 	{
-		if (parent->get_class() == "AkEvent3D")
+		if (parent->get_class() == "AkEvent3D" || parent->is_in_group("AkEvent3D"))
 		{
 			AkEvent3D* event = Object::cast_to<AkEvent3D>(parent);
 			if (event)
@@ -61,7 +61,7 @@ void AkEnvironment::_on_area_exited(const Area3D* area)
 
 	if (parent)
 	{
-		if (parent->get_class() == "AkEvent3D")
+		if (parent->get_class() == "AkEvent3D" || parent->is_in_group("AkEvent3D"))
 		{
 			AkEvent3D* event = Object::cast_to<AkEvent3D>(parent);
 			if (event)

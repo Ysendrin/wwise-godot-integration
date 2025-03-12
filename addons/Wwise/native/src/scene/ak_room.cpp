@@ -79,7 +79,8 @@ void AkRoom::_on_area_entered(const Area3D* area)
 
 	if (parent)
 	{
-		if (parent->get_class() == "AkEvent3D" || parent->get_class() == "AkListener3D")
+		if (parent->get_class() == "AkEvent3D" || parent->get_class() == "AkListener3D" ||
+				parent->is_in_group("AkEvent3D"))
 		{
 			// If we have an AkListener3D or an AkEvent3D, keep track
 			// of the room it's entering.
@@ -110,7 +111,8 @@ void AkRoom::_on_area_exited(const Area3D* area)
 
 	if (parent)
 	{
-		if (parent->get_class() == "AkEvent3D" || parent->get_class() == "AkListener3D")
+		if (parent->get_class() == "AkEvent3D" || parent->get_class() == "AkListener3D" ||
+				parent->is_in_group("AkEvent3D"))
 		{
 			// Check if the AkListener3D or AkEvent3D is leaving the
 			// room they are in to go outside.
