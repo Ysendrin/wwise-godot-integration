@@ -48,7 +48,7 @@ void AkPortal::_ready()
 		if (box_shape)
 		{
 			extent = box_shape->get_size();
-			set_portal();
+			call_deferred("set_portal");
 		}
 	}
 }
