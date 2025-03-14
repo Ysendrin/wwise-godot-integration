@@ -1,5 +1,4 @@
 #include "ak_environment_data.h"
-#include <godot-cpp\include\godot_cpp\templates\vector.hpp>
 
 void AkAuxArrayData::set_values(const Node* event_node)
 {
@@ -54,7 +53,7 @@ void AkEnvironmentData::add_highest_priority_environments()
 {
 	if (aux_array_data.data.size() < active_environments.size())
 	{
-		Vector<int> invalid_indices;
+		PackedInt32Array invalid_indices;
 
 		for (int i = 0; i < active_environments.size(); i++)
 		{
