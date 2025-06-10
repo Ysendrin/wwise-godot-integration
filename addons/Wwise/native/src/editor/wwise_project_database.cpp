@@ -1,4 +1,5 @@
 #include "wwise_project_database.h"
+#include <map>
 
 WwiseProjectDatabase* WwiseProjectDatabase::singleton = nullptr;
 bool WwiseProjectDatabase::project_info_exists = false;

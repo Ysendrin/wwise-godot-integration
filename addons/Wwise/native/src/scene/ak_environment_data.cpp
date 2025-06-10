@@ -60,7 +60,7 @@ void AkEnvironmentData::add_highest_priority_environments()
 		{
 			Variant environment = active_environments[i];
 
-			if (!UtilityFunctions::is_instance_valid(environment))
+			if (!ObjectDB::get_instance(Object::cast_to<Object>(environment)->get_instance_id()))
 			{
 				invalid_indices.push_back(i);
 				continue;
